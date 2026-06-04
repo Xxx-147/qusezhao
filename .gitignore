@@ -1,0 +1,46 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+build/
+dist/
+
+# Virtual environments
+.venv/
+.venv-*/
+venv/
+env/
+
+# Local datasets, model outputs, and generated review artifacts
+datasets/
+models/
+experiments/
+review_packages/
+samples/
+profiles/
+outputs/
+
+# Local/private image and raw film assets
+*.jpg
+*.jpeg
+*.png
+*.tif
+*.tiff
+*.bmp
+*.webp
+*.dng
+*.arw
+*.cr2
+*.cr3
+*.nef
+*.raf
+*.rw2
+
+# Local/editor noise
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
