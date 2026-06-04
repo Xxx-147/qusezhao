@@ -2,9 +2,10 @@ from __future__ import annotations
 
 import argparse
 import csv
+import os
 from pathlib import Path
 
-from PIL import Image
+from PIL import Image, ImageDraw
 
 
 def main() -> None:
@@ -41,10 +42,7 @@ def main() -> None:
             image = Image.fromarray(rgb, mode="RGB")
             image.thumbnail((args.max_size, args.max_size))
             image.save(output_negative)
-            try:
-                target_value = str(target_path.relative_to(args.output_dir))
-            except ValueError:
-                target_value = str(target_path)
+            target_value = str(Path(os.path.relpath(target_path, args.output_dir)))
             rows.append(
                 {
                     "negative": str(output_negative.relative_to(args.output_dir)),
@@ -58,12 +56,39 @@ def main() -> None:
         writer = csv.DictWriter(file, fieldnames=["negative", "target", "source"])
         writer.writeheader()
         writer.writerows(rows)
+    _make_pair_sheet(rows, args.output_dir, args.output_dir / "raw_negative_pair_sheet.jpg")
     print(f"wrote {len(rows)} rows to {output_manifest}")
 
 
 def _resolve(root: Path, value: str) -> Path:
     path = Path(value)
     return path if path.is_absolute() else root / path
+
+
+def _thumbnail(image: Image.Image, size: tuple[int, int]) -> Image.Image:
+    thumb = image.convert("RGB")
+    thumb.thumbnail(size)
+    canvas = Image.new("RGB", size, (18, 20, 23))
+    canvas.paste(thumb, ((size[0] - thumb.width) // 2, (size[1] - thumb.height) // 2))
+    return canvas
+
+
+def _make_pair_sheet(rows: list[dict[str, str]], manifest_root: Path, output: Path) -> None:
+    cell = (360, 236)
+    header = 34
+    sheet = Image.new("RGB", (cell[0] * 2, max(1, (cell[1] + header) * len(rows) + header)), (28, 30, 34))
+    draw = ImageDraw.Draw(sheet)
+    draw.text((10, 10), "BlueNeg raw DNG rendered: negative input -> pseudoGT target", fill=(235, 238, 242))
+    for row_index, record in enumerate(rows):
+        y = header + row_index * (cell[1] + header)
+        negative = Image.open(_resolve(manifest_root, record["negative"]))
+        target = Image.open(_resolve(manifest_root, record["target"]))
+        labels = [f"{row_index + 1} raw negative", f"{row_index + 1} pseudoGT target"]
+        for col, (label, image) in enumerate(zip(labels, [negative, target])):
+            draw.text((col * cell[0] + 10, y + 8), label, fill=(235, 238, 242))
+            sheet.paste(_thumbnail(image, cell), (col * cell[0], y + header))
+    sheet.save(output, quality=92)
+    print(output)
 
 
 if __name__ == "__main__":

@@ -44,3 +44,12 @@ outputs/
 Thumbs.db
 .idea/
 .vscode/
+
+# Secrets and heavyweight model artifacts
+.env
+.env.*
+*.pt
+*.pth
+*.ckpt
+*.onnx
+*.safetensors

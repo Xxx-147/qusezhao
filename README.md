@@ -121,8 +121,8 @@ python -m film_mask_automation.cli convert input_negative.jpg output_positive.jp
 常用流程：
 
 ```powershell
-python tools\download_blueneg_subset.py --mode raw-negative --count 10
-python tools\render_blueneg_raw_negatives.py
+python tools\expand_blueneg_raw_rendered.py --count 60
+python tools\orient_blueneg_rendered.py
 python tools\build_mixed_true_negative_dataset.py
 python -m film_mask_automation.ml.train datasets\training_manifest.csv models\film_mask_tiny_local.pt --epochs 2 --steps-per-epoch 8 --batch-size 2 --crop-size 128 --base-channels 16 --device cpu
 python tools\create_experiment_run.py
@@ -136,6 +136,36 @@ python tools\create_experiment_run.py
 python -m pytest
 ```
 
+## 同步到 GitHub
+
+项目已连接到：
+
+```text
+https://github.com/Xxx-147/qusezhao.git
+```
+
+每次阶段性更新后可以运行：
+
+```powershell
+powershell -NoProfile -ExecutionPolicy Bypass -File tools\git_sync.ps1 "chore: describe this update"
+```
+
+也可以双击根目录的：
+
+```text
+自动同步到GitHub.bat
+```
+
+这个脚本会先运行测试，再提交非忽略文件，最后推送到 GitHub。数据集、模型、实验输出和私人图片已经被 `.gitignore` 排除，不会随同步上传。
+
+如果想让项目在本机持续自动同步，可以打开：
+
+```text
+启动自动GitHub同步监听.bat
+```
+
+它会每 60 秒检查一次 Git 状态；发现非忽略变更后，会调用同一个测试、提交、推送流程。窗口关闭后监听停止。
+
 ## 文档
 
 - [项目总览](docs/00_项目总览.md)
@@ -145,3 +175,4 @@ python -m pytest
 - [测试计划](docs/04_测试计划.md)
 - [公开样例与行业参数研究](docs/05_公开样例与行业参数研究.md)
 - [AI 模型训练计划](docs/06_AI模型训练计划.md)
+- [项目进度记录](docs/07_项目进度记录.md)

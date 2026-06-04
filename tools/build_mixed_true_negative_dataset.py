@@ -12,32 +12,34 @@ def main() -> None:
     dataset_dir = root / "datasets" / "mixed_true_negative_pairs"
     dataset_dir.mkdir(parents=True, exist_ok=True)
 
-    rows = [
-        row("../../1-1.jpg", "../../1-2.jpg", "train", "local", "unknown", "unknown", "user supplied true negative pair 1"),
-        row("../../2-1.jpg", "../../2-2.jpg", "train", "local", "unknown", "unknown", "user supplied true negative pair 2"),
-        row(
-            "../../samples/public_input/wikimedia_negative_positive_negative.jpg",
-            "../../samples/public_reference/wikimedia_negative_positive_reference.jpg",
-            "train",
-            "wikimedia-public-domain",
-            "unknown",
-            "unknown",
-            "public domain negative/positive split",
-        ),
-        row("../../3-1.jpg", "../../3-2.jpg", "test", "local", "unknown", "unknown", "user supplied held-out true negative pair 3"),
-    ]
+    rows = discover_local_rows(root)
+    rows.extend(
+        [
+            row(
+                "../../samples/public_input/wikimedia_negative_positive_negative.jpg",
+                "../../samples/public_reference/wikimedia_negative_positive_reference.jpg",
+                "train",
+                "wikimedia-public-domain",
+                "unknown",
+                "unknown",
+                "public domain negative/positive split",
+            ),
+        ]
+    )
 
-    blueneg_manifest = root / "datasets" / "blueneg_raw_rendered" / "rendered_manifest.csv"
+    oriented_manifest = root / "datasets" / "blueneg_raw_oriented" / "oriented_manifest.csv"
+    rendered_manifest = root / "datasets" / "blueneg_raw_rendered" / "rendered_manifest.csv"
+    blueneg_manifest = oriented_manifest if oriented_manifest.exists() else rendered_manifest
     if blueneg_manifest.exists():
         with blueneg_manifest.open("r", encoding="utf-8", newline="") as file:
             for index, record in enumerate(csv.DictReader(file), start=1):
                 split = "test" if index % 5 == 0 else "train"
                 rows.append(
                     row(
-                        f"../../datasets/blueneg_raw_rendered/{record['negative']}",
+                        str(Path("..") / ".." / "datasets" / blueneg_manifest.parent.name / record["negative"]),
                         record["target"],
                         split,
-                        "BlueNeg raw DNG rendered",
+                        "BlueNeg raw DNG oriented" if blueneg_manifest == oriented_manifest else "BlueNeg raw DNG rendered",
                         "BlueNeg raw/pseudoGT",
                         "archival color negative",
                         record.get("source", "BlueNeg raw negative paired with pseudoGT"),
@@ -68,6 +70,44 @@ def row(
         "film_stock": film_stock,
         "notes": notes,
     }
+
+
+def discover_local_rows(root: Path) -> list[dict[str, str]]:
+    rows: list[dict[str, str]] = []
+    for negative in sorted(root.glob("*-1.*")):
+        prefix = negative.stem.removesuffix("-1")
+        target = _first_existing(root, [f"{prefix}-2.jpg", f"{prefix}-2.png", f"{prefix}-2.tif", f"{prefix}-2.tiff"])
+        if not target:
+            continue
+        split = _local_split(prefix)
+        rows.append(
+            row(
+                f"../../{negative.name}",
+                f"../../{target.name}",
+                split,
+                "local",
+                "unknown",
+                "unknown",
+                f"user supplied true negative pair {prefix}",
+            )
+        )
+    return rows
+
+
+def _first_existing(root: Path, names: list[str]) -> Path | None:
+    for name in names:
+        path = root / name
+        if path.exists():
+            return path
+    return None
+
+
+def _local_split(prefix: str) -> str:
+    try:
+        index = int(prefix)
+    except ValueError:
+        return "train"
+    return "test" if index % 4 == 3 else "train"
 
 
 def write(path: Path, rows: list[dict[str, str]]) -> None:

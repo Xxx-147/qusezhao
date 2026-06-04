@@ -11,6 +11,12 @@ def main() -> None:
     parser.add_argument("--repo-id", default="ttgroup/blueneg-release")
     parser.add_argument("--output-dir", type=Path, default=Path("datasets/blueneg_subset"))
     parser.add_argument(
+        "--strategy",
+        choices=["first", "spread"],
+        default="spread",
+        help="first downloads sorted file order; spread samples evenly across all paired BlueNeg keys for more variety.",
+    )
+    parser.add_argument(
         "--mode",
         choices=["preview", "raw-negative"],
         default="preview",
@@ -37,7 +43,7 @@ def main() -> None:
     gt_files = [file for file in files if file.startswith("pseudogt-8bit/") and file.endswith(".pseudogt.png")]
     negatives = {_key(file, negative_suffix): file for file in negative_files}
     gts = {_key(file, ".pseudogt.png"): file for file in gt_files}
-    keys = sorted(negatives.keys() & gts.keys())[: args.count]
+    keys = _select_keys(sorted(negatives.keys() & gts.keys()), args.count, args.strategy)
 
     args.output_dir.mkdir(parents=True, exist_ok=True)
     rows: list[dict[str, str]] = []
@@ -68,6 +74,27 @@ def main() -> None:
 def _key(path: str, suffix: str) -> str:
     name = Path(path).name
     return name.removesuffix(suffix)
+
+
+def _select_keys(keys: list[str], count: int, strategy: str) -> list[str]:
+    if count <= 0:
+        return []
+    if strategy == "first" or count >= len(keys):
+        return keys[:count]
+    if count == 1:
+        return [keys[0]]
+
+    selected_indices = sorted({round(index * (len(keys) - 1) / (count - 1)) for index in range(count)})
+    selected = [keys[index] for index in selected_indices]
+    if len(selected) < count:
+        used = set(selected)
+        for key in keys:
+            if key not in used:
+                selected.append(key)
+                used.add(key)
+            if len(selected) == count:
+                break
+    return selected[:count]
 
 
 if __name__ == "__main__":
