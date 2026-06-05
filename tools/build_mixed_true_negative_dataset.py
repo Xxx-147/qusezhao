@@ -13,6 +13,7 @@ def main() -> None:
     dataset_dir.mkdir(parents=True, exist_ok=True)
 
     rows = discover_local_rows(root)
+    rows.extend(discover_wechat_rows(root))
     rows.extend(
         [
             row(
@@ -89,6 +90,27 @@ def discover_local_rows(root: Path) -> list[dict[str, str]]:
                 "unknown",
                 "unknown",
                 f"user supplied true negative pair {prefix}",
+            )
+        )
+    return rows
+
+
+def discover_wechat_rows(root: Path) -> list[dict[str, str]]:
+    rows: list[dict[str, str]] = []
+    files = sorted(root.glob("微信图片_*.jpg"))
+    for pair_index, index in enumerate(range(0, len(files) - 1, 2), start=1):
+        negative = files[index]
+        target = files[index + 1]
+        split = "test" if pair_index % 4 == 0 else "train"
+        rows.append(
+            row(
+                f"../../{negative.name}",
+                f"../../{target.name}",
+                split,
+                "local-wechat",
+                "unknown",
+                "unknown",
+                f"user supplied WeChat true negative pair {pair_index}: {negative.name} -> {target.name}",
             )
         )
     return rows

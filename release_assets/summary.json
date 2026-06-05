@@ -1,7 +1,7 @@
 {
-  "dataset_count": 65,
-  "train_count": 52,
-  "test_count": 13,
+  "dataset_count": 71,
+  "train_count": 57,
+  "test_count": 14,
   "model": "models/film_mask_tiny_mixed_true_negative.pt",
   "manifest": "dataset/manifest.csv",
   "train_manifest": "dataset/train_manifest.csv",

@@ -130,6 +130,8 @@ python tools\create_experiment_run.py
 
 说明：当前小模型只用于验证训练和集成流程，不代表最终画质。最终模型需要更多真实负片/正片对、按胶片类型和扫描仪来源分层测试，并持续记录每次实验输出。
 
+注意：AI 模型需要 PyTorch。命令行使用 AI 时优先运行 `.venv-ml\Scripts\python.exe`；根目录的 `启动图形界面.bat` 会优先使用 `.venv-ml`，这样 GUI 才能直接调用最新模型权重。
+
 ## 可下载训练包
 
 仓库包含 `release_assets/`，用于让别人 clone 后直接使用当前训练集、测试集和模型权重：

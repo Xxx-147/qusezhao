@@ -61,16 +61,16 @@ class BatchWorker(QObject):
         output_dir: Path,
         params: ConversionParams,
         profile_path: Path | None,
+        processing_mode: str,
         ai_model_path: Path | None = None,
-        smart_auto: bool = False,
     ) -> None:
         super().__init__()
         self._images = images
         self._output_dir = output_dir
         self._params = params
         self._profile_path = profile_path
+        self._processing_mode = processing_mode
         self._ai_model_path = ai_model_path
-        self._smart_auto = smart_auto
         self._cancelled = False
 
     def cancel(self) -> None:
@@ -83,6 +83,10 @@ class BatchWorker(QObject):
             from film_mask_automation.ml.inference import convert_with_model
 
             model_converter = convert_with_model
+        if self._processing_mode == "ai" and not self._ai_model_path:
+            self.log.emit("AI 模式需要先选择模型 checkpoint。")
+            self.finished.emit()
+            return
         self._output_dir.mkdir(parents=True, exist_ok=True)
         total = len(self._images)
         for index, input_path in enumerate(self._images, start=1):
@@ -92,25 +96,27 @@ class BatchWorker(QObject):
             output_path = self._output_dir / f"{input_path.stem}_positive{input_path.suffix}"
             try:
                 self.progress.emit(index, total, input_path.name)
-                if model_converter and self._ai_model_path:
+                if self._processing_mode == "ai" and model_converter and self._ai_model_path:
                     with Image.open(input_path) as image:
                         model_converter(image, self._ai_model_path).save(output_path)
                     diagnostics = {"ai_model": str(self._ai_model_path)}
-                elif self._smart_auto:
+                elif self._processing_mode == "smart":
                     with Image.open(input_path) as image:
                         result = convert_image_smart(image)
                         result.image.save(output_path)
                         diagnostics = result.diagnostics
                 else:
                     diagnostics = convert_file(input_path, output_path, self._params)
-                if profile and not model_converter:
+                if profile and self._processing_mode != "ai":
                     with Image.open(output_path) as image:
                         apply_color_profile(image, profile).save(output_path)
                 self.file_done.emit(index - 1, str(output_path), "完成")
                 if "mask_rgb" in diagnostics:
                     self.log.emit(f"完成：{input_path.name}  色罩={diagnostics['mask_rgb']}")
-                else:
+                elif "ai_model" in diagnostics:
                     self.log.emit(f"完成：{input_path.name}  AI模型={diagnostics['ai_model']}")
+                else:
+                    self.log.emit(f"完成：{input_path.name}")
             except Exception as exc:
                 self.file_done.emit(index - 1, "", "失败")
                 self.log.emit(f"失败：{input_path.name}  {exc}")
@@ -124,6 +130,7 @@ class MainWindow(QMainWindow):
         self.resize(1480, 920)
 
         self._items: list[QueuedImage] = []
+        self._current_original: Image.Image | None = None
         self._current_output: Image.Image | None = None
         self._worker_thread: QThread | None = None
         self._worker: BatchWorker | None = None
@@ -347,13 +354,14 @@ class MainWindow(QMainWindow):
         group = QGroupBox("批量输出")
         form = QFormLayout(group)
         self.output_dir = QLineEdit(str(Path.home() / "Desktop" / "film-mask-output"))
-        self.smart_auto = QCheckBox("批量时使用智能自动模式")
-        self.smart_auto.setChecked(False)
-        self.smart_auto.stateChanged.connect(self._preview_current)
+        self.conversion_mode = QComboBox()
+        self.conversion_mode.addItems(["规则手动", "智能自动", "AI模型"])
+        self.conversion_mode.setCurrentText("规则手动")
+        self.conversion_mode.currentTextChanged.connect(self._preview_current)
         choose_output = QPushButton("选择输出目录")
         choose_output.clicked.connect(self._choose_output_dir)
         form.addRow("输出目录", self.output_dir)
-        form.addRow("", self.smart_auto)
+        form.addRow("处理模式", self.conversion_mode)
         form.addRow("", choose_output)
         layout.addWidget(group)
 
@@ -385,7 +393,7 @@ class MainWindow(QMainWindow):
 
         ai_group = QGroupBox("AI 模型")
         ai_form = QFormLayout(ai_group)
-        self.ai_model_path = QLineEdit("")
+        self.ai_model_path = QLineEdit(str(self._default_ai_model_path() or ""))
         choose_ai_model = QPushButton("选择模型 Checkpoint")
         choose_ai_model.clicked.connect(self._choose_ai_model)
         clear_ai_model = QPushButton("不使用 AI 模型")
@@ -480,13 +488,16 @@ class MainWindow(QMainWindow):
         try:
             with Image.open(input_path) as image:
                 original = image.convert("RGB")
+                mode = self._conversion_mode()
                 ai_model_path = self._ai_model_path()
-                if ai_model_path:
+                if mode == "ai":
+                    if not ai_model_path:
+                        raise ValueError("AI 模式需要先选择模型 checkpoint")
                     from film_mask_automation.ml.inference import convert_with_model
 
                     output = convert_with_model(original, ai_model_path)
                     result = None
-                elif self.smart_auto.isChecked():
+                elif mode == "smart":
                     result = convert_image_smart(original)
                     output = result.image
                 else:
@@ -495,6 +506,7 @@ class MainWindow(QMainWindow):
                     profile_path = self._profile_path()
                     if profile_path:
                         output = apply_color_profile(output, load_color_profile(profile_path))
+                self._current_original = original.copy()
                 self._current_output = output.copy()
                 self._set_pixmap(self.original_label, original)
                 self._set_pixmap(self.output_label, output)
@@ -530,8 +542,8 @@ class MainWindow(QMainWindow):
             output_dir,
             self._params(),
             self._profile_path(),
+            self._conversion_mode(),
             self._ai_model_path(),
-            self.smart_auto.isChecked(),
         )
         self._worker.moveToThread(self._worker_thread)
         self._worker_thread.started.connect(self._worker.run)
@@ -580,6 +592,7 @@ class MainWindow(QMainWindow):
         path, _ = QFileDialog.getOpenFileName(self, "选择 AI 模型", str(Path.cwd()), "Model (*.pt *.pth *.ckpt)")
         if path:
             self.ai_model_path.setText(path)
+            self.conversion_mode.setCurrentText("AI模型")
             self._log(f"已选择 AI 模型：{path}")
             self._preview_current()
 
@@ -654,6 +667,24 @@ class MainWindow(QMainWindow):
         text = self.profile_path.text().strip()
         return Path(text) if text else None
 
+    def _conversion_mode(self) -> str:
+        text = self.conversion_mode.currentText()
+        if text == "AI模型":
+            return "ai"
+        if text == "智能自动":
+            return "smart"
+        return "manual"
+
+    def _default_ai_model_path(self) -> Path | None:
+        candidates = [
+            Path.cwd() / "release_assets" / "models" / "film_mask_tiny_mixed_true_negative.pt",
+            Path.cwd() / "models" / "film_mask_tiny_mixed_true_negative.pt",
+        ]
+        for candidate in candidates:
+            if candidate.exists():
+                return candidate
+        return None
+
     def _ai_model_path(self) -> Path | None:
         text = self.ai_model_path.text().strip()
         return Path(text) if text else None
@@ -672,7 +703,10 @@ class MainWindow(QMainWindow):
 
     def resizeEvent(self, event) -> None:  # type: ignore[no-untyped-def]
         super().resizeEvent(event)
-        self._preview_current()
+        if self._current_original is not None:
+            self._set_pixmap(self.original_label, self._current_original)
+        if self._current_output is not None:
+            self._set_pixmap(self.output_label, self._current_output)
 
     def _apply_style(self) -> None:
         QApplication.instance().setStyleSheet(
