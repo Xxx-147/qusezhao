@@ -99,7 +99,7 @@ class BatchWorker(QObject):
                 if self._processing_mode == "ai" and model_converter and self._ai_model_path:
                     with Image.open(input_path) as image:
                         model_converter(image, self._ai_model_path).save(output_path)
-                    diagnostics = {"ai_model": str(self._ai_model_path)}
+                    diagnostics = {"ai_model": str(self._ai_model_path), "ai_enhance": True, "ai_hybrid_anchor": True}
                 elif self._processing_mode == "smart":
                     with Image.open(input_path) as image:
                         result = convert_image_smart(image)
@@ -114,7 +114,11 @@ class BatchWorker(QObject):
                 if "mask_rgb" in diagnostics:
                     self.log.emit(f"完成：{input_path.name}  色罩={diagnostics['mask_rgb']}")
                 elif "ai_model" in diagnostics:
-                    self.log.emit(f"完成：{input_path.name}  AI模型={diagnostics['ai_model']}")
+                    self.log.emit(
+                        f"完成：{input_path.name}  AI模型={diagnostics['ai_model']}  "
+                        f"增强={diagnostics.get('ai_enhance', True)}  "
+                        f"混合锚点={diagnostics.get('ai_hybrid_anchor', True)}"
+                    )
                 else:
                     self.log.emit(f"完成：{input_path.name}")
             except Exception as exc:

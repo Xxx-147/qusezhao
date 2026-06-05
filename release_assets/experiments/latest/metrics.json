@@ -45,11 +45,11 @@
       },
       "model_metrics": {
         "mean_absolute_error_rgb": [
-          47.55,
-          46.58,
-          52.6
+          52.9,
+          53.73,
+          52.18
         ],
-        "mean_absolute_error_total": 48.94,
+        "mean_absolute_error_total": 52.93,
         "output_size": [
           1320,
           1308
@@ -99,11 +99,11 @@
       },
       "model_metrics": {
         "mean_absolute_error_rgb": [
-          46.82,
-          45.74,
-          38.33
+          21.5,
+          23.58,
+          21.36
         ],
-        "mean_absolute_error_total": 43.63,
+        "mean_absolute_error_total": 22.15,
         "output_size": [
           1320,
           866
@@ -153,11 +153,11 @@
       },
       "model_metrics": {
         "mean_absolute_error_rgb": [
-          71.71,
-          54.47,
-          48.17
+          64.46,
+          50.5,
+          48.87
         ],
-        "mean_absolute_error_total": 58.13,
+        "mean_absolute_error_total": 54.62,
         "output_size": [
           1077,
           1600
@@ -207,11 +207,11 @@
       },
       "model_metrics": {
         "mean_absolute_error_rgb": [
-          51.0,
-          29.7,
-          29.28
+          67.13,
+          35.14,
+          29.14
         ],
-        "mean_absolute_error_total": 36.67,
+        "mean_absolute_error_total": 43.81,
         "output_size": [
           1600,
           1082
@@ -261,11 +261,11 @@
       },
       "model_metrics": {
         "mean_absolute_error_rgb": [
-          28.1,
-          41.62,
-          36.66
+          15.06,
+          29.74,
+          34.82
         ],
-        "mean_absolute_error_total": 35.46,
+        "mean_absolute_error_total": 26.54,
         "output_size": [
           1083,
           1600
@@ -315,11 +315,11 @@
       },
       "model_metrics": {
         "mean_absolute_error_rgb": [
-          57.65,
-          50.89,
-          47.28
+          53.58,
+          50.99,
+          47.83
         ],
-        "mean_absolute_error_total": 51.95,
+        "mean_absolute_error_total": 50.81,
         "output_size": [
           1600,
           1081
@@ -369,11 +369,11 @@
       },
       "model_metrics": {
         "mean_absolute_error_rgb": [
-          34.86,
-          49.73,
-          50.79
+          28.2,
+          36.93,
+          55.32
         ],
-        "mean_absolute_error_total": 45.14,
+        "mean_absolute_error_total": 40.16,
         "output_size": [
           1084,
           1600
@@ -423,11 +423,11 @@
       },
       "model_metrics": {
         "mean_absolute_error_rgb": [
-          45.68,
-          37.93,
-          28.01
+          30.97,
+          40.43,
+          28.86
         ],
-        "mean_absolute_error_total": 37.22,
+        "mean_absolute_error_total": 33.43,
         "output_size": [
           1600,
           1076
@@ -477,11 +477,11 @@
       },
       "model_metrics": {
         "mean_absolute_error_rgb": [
-          39.03,
-          25.72,
-          35.74
+          38.64,
+          28.39,
+          33.27
         ],
-        "mean_absolute_error_total": 33.51,
+        "mean_absolute_error_total": 33.44,
         "output_size": [
           1600,
           1081
@@ -531,11 +531,11 @@
       },
       "model_metrics": {
         "mean_absolute_error_rgb": [
-          19.96,
-          20.39,
-          20.91
+          30.41,
+          23.3,
+          22.46
         ],
-        "mean_absolute_error_total": 20.42,
+        "mean_absolute_error_total": 25.39,
         "output_size": [
           1600,
           1078
@@ -585,11 +585,11 @@
       },
       "model_metrics": {
         "mean_absolute_error_rgb": [
-          59.11,
-          67.36,
-          60.15
+          47.33,
+          38.65,
+          41.45
         ],
-        "mean_absolute_error_total": 62.22,
+        "mean_absolute_error_total": 42.49,
         "output_size": [
           1600,
           1076
@@ -639,11 +639,11 @@
       },
       "model_metrics": {
         "mean_absolute_error_rgb": [
-          44.25,
-          35.05,
-          26.01
+          62.17,
+          63.87,
+          47.13
         ],
-        "mean_absolute_error_total": 35.11,
+        "mean_absolute_error_total": 57.73,
         "output_size": [
           1600,
           1070
@@ -693,11 +693,11 @@
       },
       "model_metrics": {
         "mean_absolute_error_rgb": [
-          50.26,
-          46.92,
-          52.77
+          47.37,
+          48.34,
+          50.0
         ],
-        "mean_absolute_error_total": 49.99,
+        "mean_absolute_error_total": 48.58,
         "output_size": [
           1078,
           1600
@@ -747,11 +747,11 @@
       },
       "model_metrics": {
         "mean_absolute_error_rgb": [
-          33.04,
-          33.43,
-          32.14
+          31.34,
+          37.09,
+          35.45
         ],
-        "mean_absolute_error_total": 32.89,
+        "mean_absolute_error_total": 34.65,
         "output_size": [
           1600,
           1077

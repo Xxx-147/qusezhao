@@ -26,6 +26,8 @@ def main() -> None:
     convert_parser.add_argument("--profile", type=Path, help="Apply a saved color profile after negative conversion.")
     convert_parser.add_argument("--smart-auto", action="store_true", help="Try multiple conversion presets and pick the most stable one.")
     convert_parser.add_argument("--ai-model", type=Path, help="Use a trained AI model checkpoint for conversion.")
+    convert_parser.add_argument("--no-ai-enhance", action="store_true", help="Disable conservative color restoration after AI inference.")
+    convert_parser.add_argument("--no-ai-hybrid", action="store_true", help="Disable smart-rule anchoring after AI inference.")
     _add_processing_args(convert_parser)
 
     batch_parser = subparsers.add_parser("batch", help="Convert all supported images in a folder.")
@@ -35,6 +37,8 @@ def main() -> None:
     batch_parser.add_argument("--profile", type=Path, help="Apply a saved color profile after negative conversion.")
     batch_parser.add_argument("--smart-auto", action="store_true", help="Try multiple conversion presets for each image.")
     batch_parser.add_argument("--ai-model", type=Path, help="Use a trained AI model checkpoint for each image.")
+    batch_parser.add_argument("--no-ai-enhance", action="store_true", help="Disable conservative color restoration after AI inference.")
+    batch_parser.add_argument("--no-ai-hybrid", action="store_true", help="Disable smart-rule anchoring after AI inference.")
     _add_processing_args(batch_parser)
 
     calibrate_parser = subparsers.add_parser("calibrate", help="Fit a reusable color profile from a negative/reference pair.")
@@ -53,9 +57,18 @@ def main() -> None:
 
             args.output.parent.mkdir(parents=True, exist_ok=True)
             with Image.open(args.input) as image:
-                output = convert_with_model(image, args.ai_model)
+                output = convert_with_model(
+                    image,
+                    args.ai_model,
+                    enhance=not args.no_ai_enhance,
+                    hybrid_anchor=not args.no_ai_hybrid,
+                )
                 output.save(args.output)
-                diagnostics = {"ai_model": str(args.ai_model)}
+                diagnostics = {
+                    "ai_model": str(args.ai_model),
+                    "ai_enhance": not args.no_ai_enhance,
+                    "ai_hybrid_anchor": not args.no_ai_hybrid,
+                }
         elif args.smart_auto:
             args.output.parent.mkdir(parents=True, exist_ok=True)
             with Image.open(args.input) as image:
@@ -76,7 +89,16 @@ def main() -> None:
         print(json.dumps(payload, indent=2, ensure_ascii=False))
         return
 
-    results = _convert_batch(args.input_dir, args.output_dir, params, args.profile, args.smart_auto, args.ai_model)
+    results = _convert_batch(
+        args.input_dir,
+        args.output_dir,
+        params,
+        args.profile,
+        args.smart_auto,
+        args.ai_model,
+        ai_enhance=not args.no_ai_enhance,
+        ai_hybrid_anchor=not args.no_ai_hybrid,
+    )
     payload = {"count": len(results), "files": results}
     if args.diagnostics_json:
         args.diagnostics_json.parent.mkdir(parents=True, exist_ok=True)
@@ -146,6 +168,8 @@ def _convert_batch(
     profile_path: Path | None = None,
     smart_auto: bool = False,
     ai_model_path: Path | None = None,
+    ai_enhance: bool = True,
+    ai_hybrid_anchor: bool = True,
 ) -> list[dict[str, object]]:
     output_dir.mkdir(parents=True, exist_ok=True)
     profile = load_color_profile(profile_path) if profile_path else None
@@ -159,9 +183,18 @@ def _convert_batch(
                 from .ml.inference import convert_with_model
 
                 with Image.open(input_path) as image:
-                    output = convert_with_model(image, ai_model_path)
+                    output = convert_with_model(
+                        image,
+                        ai_model_path,
+                        enhance=ai_enhance,
+                        hybrid_anchor=ai_hybrid_anchor,
+                    )
                     output.save(output_path)
-                    diagnostics = {"ai_model": str(ai_model_path)}
+                    diagnostics = {
+                        "ai_model": str(ai_model_path),
+                        "ai_enhance": ai_enhance,
+                        "ai_hybrid_anchor": ai_hybrid_anchor,
+                    }
             elif smart_auto:
                 with Image.open(input_path) as image:
                     result = convert_image_smart(image)

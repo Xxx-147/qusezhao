@@ -118,7 +118,7 @@ def _make_output_sheet(
     draw = ImageDraw.Draw(sheet)
     draw.text(
         (10, 10),
-        "test: input negative / reference target / rule neutral / fixed warm / smart auto / AI model",
+        "test: input negative / reference target / rule neutral / fixed warm / smart auto / AI hybrid",
         fill=(235, 238, 242),
     )
 
@@ -174,7 +174,7 @@ def _make_output_sheet(
             ("rule neutral", Image.open(output_paths["manual"])),
             ("fixed warm", Image.open(output_paths["adjusted"])),
             ("smart auto", Image.open(output_paths["smart"])),
-            ("AI model", Image.open(output_paths["model"])),
+            ("AI hybrid", Image.open(output_paths["model"])),
         ]
         for col, (label, image) in enumerate(images):
             draw.text((col * cell[0] + 8, y + 8), f"{row + 1} {label}", fill=(235, 238, 242))
@@ -203,7 +203,7 @@ def _write_legend(path: Path) -> None:
                 "| rule neutral | Default rule-based conversion with percentile mask removal and no gray-world white balance. | Neutral technical baseline. |",
                 "| fixed warm | A fixed hand-tuned parameter set used for comparison. | Warm/brighter baseline, not per-image optimized. |",
                 "| smart auto | Automatic preset search scored by image statistics. | Batch-friendly automatic baseline. |",
-                "| AI model | Output from the current trained checkpoint. | Learned from the training targets; quality depends on dataset size and training time. |",
+                "| AI hybrid | Current checkpoint output after color restoration and smart-rule anchoring. | Learned model output stabilized by a deterministic orange-mask baseline. |",
                 "",
                 "These columns are comparison outputs, not final named film looks. Future style profiles should be trained or calibrated separately for targets such as Frontier SP3000, Noritsu, NLP-like, and neutral lab print.",
             ]

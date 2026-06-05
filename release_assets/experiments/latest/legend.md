@@ -7,6 +7,6 @@
 | rule neutral | Default rule-based conversion with percentile mask removal and no gray-world white balance. | Neutral technical baseline. |
 | fixed warm | A fixed hand-tuned parameter set used for comparison. | Warm/brighter baseline, not per-image optimized. |
 | smart auto | Automatic preset search scored by image statistics. | Batch-friendly automatic baseline. |
-| AI model | Output from the current trained checkpoint. | Learned from the training targets; quality depends on dataset size and training time. |
+| AI hybrid | Current checkpoint output after color restoration and smart-rule anchoring. | Learned model output stabilized by a deterministic orange-mask baseline. |
 
 These columns are comparison outputs, not final named film looks. Future style profiles should be trained or calibrated separately for targets such as Frontier SP3000, Noritsu, NLP-like, and neutral lab print.
