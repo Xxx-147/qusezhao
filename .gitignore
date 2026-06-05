@@ -53,3 +53,7 @@ Thumbs.db
 *.ckpt
 *.onnx
 *.safetensors
+
+# Packaged release assets are intentionally committed through Git LFS.
+!release_assets/
+!release_assets/**

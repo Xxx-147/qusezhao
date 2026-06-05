@@ -1,0 +1,708 @@
+{
+  "train_count": 52,
+  "test_count": 13,
+  "outputs": [
+    {
+      "sample": 1,
+      "source": "local",
+      "scanner_profile": "unknown",
+      "manual_vs_adjusted_mean_abs_diff": 46.2,
+      "manual_metrics": {
+        "mean_absolute_error_rgb": [
+          51.69,
+          51.88,
+          54.52
+        ],
+        "mean_absolute_error_total": 52.69,
+        "output_size": [
+          1320,
+          1308
+        ]
+      },
+      "adjusted_metrics": {
+        "mean_absolute_error_rgb": [
+          68.74,
+          56.15,
+          50.78
+        ],
+        "mean_absolute_error_total": 58.56,
+        "output_size": [
+          1320,
+          1308
+        ]
+      },
+      "smart_metrics": {
+        "mean_absolute_error_rgb": [
+          53.04,
+          51.86,
+          55.31
+        ],
+        "mean_absolute_error_total": 53.38,
+        "output_size": [
+          1320,
+          1308
+        ]
+      },
+      "model_metrics": {
+        "mean_absolute_error_rgb": [
+          47.61,
+          46.75,
+          55.57
+        ],
+        "mean_absolute_error_total": 49.99,
+        "output_size": [
+          1320,
+          1308
+        ]
+      }
+    },
+    {
+      "sample": 2,
+      "source": "BlueNeg raw DNG oriented",
+      "scanner_profile": "BlueNeg raw/pseudoGT",
+      "manual_vs_adjusted_mean_abs_diff": 37.36,
+      "manual_metrics": {
+        "mean_absolute_error_rgb": [
+          56.99,
+          58.81,
+          54.47
+        ],
+        "mean_absolute_error_total": 56.79,
+        "output_size": [
+          1077,
+          1600
+        ]
+      },
+      "adjusted_metrics": {
+        "mean_absolute_error_rgb": [
+          73.83,
+          53.94,
+          51.56
+        ],
+        "mean_absolute_error_total": 59.8,
+        "output_size": [
+          1077,
+          1600
+        ]
+      },
+      "smart_metrics": {
+        "mean_absolute_error_rgb": [
+          62.41,
+          49.73,
+          50.36
+        ],
+        "mean_absolute_error_total": 54.19,
+        "output_size": [
+          1077,
+          1600
+        ]
+      },
+      "model_metrics": {
+        "mean_absolute_error_rgb": [
+          71.22,
+          51.0,
+          46.4
+        ],
+        "mean_absolute_error_total": 56.21,
+        "output_size": [
+          1077,
+          1600
+        ]
+      }
+    },
+    {
+      "sample": 3,
+      "source": "BlueNeg raw DNG oriented",
+      "scanner_profile": "BlueNeg raw/pseudoGT",
+      "manual_vs_adjusted_mean_abs_diff": 38.99,
+      "manual_metrics": {
+        "mean_absolute_error_rgb": [
+          65.78,
+          40.23,
+          35.05
+        ],
+        "mean_absolute_error_total": 47.03,
+        "output_size": [
+          1600,
+          1082
+        ]
+      },
+      "adjusted_metrics": {
+        "mean_absolute_error_rgb": [
+          119.1,
+          54.04,
+          43.11
+        ],
+        "mean_absolute_error_total": 72.09,
+        "output_size": [
+          1600,
+          1082
+        ]
+      },
+      "smart_metrics": {
+        "mean_absolute_error_rgb": [
+          71.79,
+          41.1,
+          35.01
+        ],
+        "mean_absolute_error_total": 49.3,
+        "output_size": [
+          1600,
+          1082
+        ]
+      },
+      "model_metrics": {
+        "mean_absolute_error_rgb": [
+          50.39,
+          26.67,
+          28.59
+        ],
+        "mean_absolute_error_total": 35.23,
+        "output_size": [
+          1600,
+          1082
+        ]
+      }
+    },
+    {
+      "sample": 4,
+      "source": "BlueNeg raw DNG oriented",
+      "scanner_profile": "BlueNeg raw/pseudoGT",
+      "manual_vs_adjusted_mean_abs_diff": 28.35,
+      "manual_metrics": {
+        "mean_absolute_error_rgb": [
+          17.07,
+          21.3,
+          88.83
+        ],
+        "mean_absolute_error_total": 42.4,
+        "output_size": [
+          1083,
+          1600
+        ]
+      },
+      "adjusted_metrics": {
+        "mean_absolute_error_rgb": [
+          48.0,
+          15.45,
+          68.74
+        ],
+        "mean_absolute_error_total": 44.07,
+        "output_size": [
+          1083,
+          1600
+        ]
+      },
+      "smart_metrics": {
+        "mean_absolute_error_rgb": [
+          26.6,
+          44.2,
+          42.0
+        ],
+        "mean_absolute_error_total": 37.6,
+        "output_size": [
+          1083,
+          1600
+        ]
+      },
+      "model_metrics": {
+        "mean_absolute_error_rgb": [
+          25.11,
+          35.89,
+          37.69
+        ],
+        "mean_absolute_error_total": 32.9,
+        "output_size": [
+          1083,
+          1600
+        ]
+      }
+    },
+    {
+      "sample": 5,
+      "source": "BlueNeg raw DNG oriented",
+      "scanner_profile": "BlueNeg raw/pseudoGT",
+      "manual_vs_adjusted_mean_abs_diff": 42.21,
+      "manual_metrics": {
+        "mean_absolute_error_rgb": [
+          55.45,
+          59.35,
+          51.99
+        ],
+        "mean_absolute_error_total": 55.62,
+        "output_size": [
+          1600,
+          1081
+        ]
+      },
+      "adjusted_metrics": {
+        "mean_absolute_error_rgb": [
+          69.68,
+          55.36,
+          48.38
+        ],
+        "mean_absolute_error_total": 57.83,
+        "output_size": [
+          1600,
+          1081
+        ]
+      },
+      "smart_metrics": {
+        "mean_absolute_error_rgb": [
+          54.68,
+          50.37,
+          52.33
+        ],
+        "mean_absolute_error_total": 52.47,
+        "output_size": [
+          1600,
+          1081
+        ]
+      },
+      "model_metrics": {
+        "mean_absolute_error_rgb": [
+          56.04,
+          48.43,
+          45.22
+        ],
+        "mean_absolute_error_total": 49.91,
+        "output_size": [
+          1600,
+          1081
+        ]
+      }
+    },
+    {
+      "sample": 6,
+      "source": "BlueNeg raw DNG oriented",
+      "scanner_profile": "BlueNeg raw/pseudoGT",
+      "manual_vs_adjusted_mean_abs_diff": 34.17,
+      "manual_metrics": {
+        "mean_absolute_error_rgb": [
+          39.09,
+          53.57,
+          84.56
+        ],
+        "mean_absolute_error_total": 59.08,
+        "output_size": [
+          1084,
+          1600
+        ]
+      },
+      "adjusted_metrics": {
+        "mean_absolute_error_rgb": [
+          37.9,
+          37.59,
+          62.93
+        ],
+        "mean_absolute_error_total": 46.15,
+        "output_size": [
+          1084,
+          1600
+        ]
+      },
+      "smart_metrics": {
+        "mean_absolute_error_rgb": [
+          32.48,
+          47.84,
+          53.24
+        ],
+        "mean_absolute_error_total": 44.53,
+        "output_size": [
+          1084,
+          1600
+        ]
+      },
+      "model_metrics": {
+        "mean_absolute_error_rgb": [
+          35.81,
+          42.9,
+          48.79
+        ],
+        "mean_absolute_error_total": 42.51,
+        "output_size": [
+          1084,
+          1600
+        ]
+      }
+    },
+    {
+      "sample": 7,
+      "source": "BlueNeg raw DNG oriented",
+      "scanner_profile": "BlueNeg raw/pseudoGT",
+      "manual_vs_adjusted_mean_abs_diff": 36.61,
+      "manual_metrics": {
+        "mean_absolute_error_rgb": [
+          25.66,
+          26.43,
+          22.33
+        ],
+        "mean_absolute_error_total": 24.82,
+        "output_size": [
+          1600,
+          1076
+        ]
+      },
+      "adjusted_metrics": {
+        "mean_absolute_error_rgb": [
+          57.88,
+          47.69,
+          37.31
+        ],
+        "mean_absolute_error_total": 47.6,
+        "output_size": [
+          1600,
+          1076
+        ]
+      },
+      "smart_metrics": {
+        "mean_absolute_error_rgb": [
+          31.84,
+          36.21,
+          44.07
+        ],
+        "mean_absolute_error_total": 37.38,
+        "output_size": [
+          1600,
+          1076
+        ]
+      },
+      "model_metrics": {
+        "mean_absolute_error_rgb": [
+          32.38,
+          32.81,
+          28.76
+        ],
+        "mean_absolute_error_total": 31.32,
+        "output_size": [
+          1600,
+          1076
+        ]
+      }
+    },
+    {
+      "sample": 8,
+      "source": "BlueNeg raw DNG oriented",
+      "scanner_profile": "BlueNeg raw/pseudoGT",
+      "manual_vs_adjusted_mean_abs_diff": 34.12,
+      "manual_metrics": {
+        "mean_absolute_error_rgb": [
+          51.34,
+          35.8,
+          53.86
+        ],
+        "mean_absolute_error_total": 47.01,
+        "output_size": [
+          1600,
+          1081
+        ]
+      },
+      "adjusted_metrics": {
+        "mean_absolute_error_rgb": [
+          30.33,
+          27.53,
+          37.82
+        ],
+        "mean_absolute_error_total": 31.92,
+        "output_size": [
+          1600,
+          1081
+        ]
+      },
+      "smart_metrics": {
+        "mean_absolute_error_rgb": [
+          60.34,
+          45.5,
+          42.63
+        ],
+        "mean_absolute_error_total": 49.5,
+        "output_size": [
+          1600,
+          1081
+        ]
+      },
+      "model_metrics": {
+        "mean_absolute_error_rgb": [
+          38.07,
+          24.37,
+          32.71
+        ],
+        "mean_absolute_error_total": 31.73,
+        "output_size": [
+          1600,
+          1081
+        ]
+      }
+    },
+    {
+      "sample": 9,
+      "source": "BlueNeg raw DNG oriented",
+      "scanner_profile": "BlueNeg raw/pseudoGT",
+      "manual_vs_adjusted_mean_abs_diff": 31.49,
+      "manual_metrics": {
+        "mean_absolute_error_rgb": [
+          33.34,
+          31.72,
+          33.42
+        ],
+        "mean_absolute_error_total": 32.83,
+        "output_size": [
+          1600,
+          1078
+        ]
+      },
+      "adjusted_metrics": {
+        "mean_absolute_error_rgb": [
+          70.01,
+          40.0,
+          22.02
+        ],
+        "mean_absolute_error_total": 44.02,
+        "output_size": [
+          1600,
+          1078
+        ]
+      },
+      "smart_metrics": {
+        "mean_absolute_error_rgb": [
+          23.52,
+          24.79,
+          31.55
+        ],
+        "mean_absolute_error_total": 26.63,
+        "output_size": [
+          1600,
+          1078
+        ]
+      },
+      "model_metrics": {
+        "mean_absolute_error_rgb": [
+          21.01,
+          20.71,
+          20.32
+        ],
+        "mean_absolute_error_total": 20.68,
+        "output_size": [
+          1600,
+          1078
+        ]
+      }
+    },
+    {
+      "sample": 10,
+      "source": "BlueNeg raw DNG oriented",
+      "scanner_profile": "BlueNeg raw/pseudoGT",
+      "manual_vs_adjusted_mean_abs_diff": 44.78,
+      "manual_metrics": {
+        "mean_absolute_error_rgb": [
+          56.07,
+          67.09,
+          77.44
+        ],
+        "mean_absolute_error_total": 66.88,
+        "output_size": [
+          1600,
+          1076
+        ]
+      },
+      "adjusted_metrics": {
+        "mean_absolute_error_rgb": [
+          55.71,
+          43.62,
+          50.12
+        ],
+        "mean_absolute_error_total": 49.84,
+        "output_size": [
+          1600,
+          1076
+        ]
+      },
+      "smart_metrics": {
+        "mean_absolute_error_rgb": [
+          46.2,
+          50.43,
+          46.02
+        ],
+        "mean_absolute_error_total": 47.56,
+        "output_size": [
+          1600,
+          1076
+        ]
+      },
+      "model_metrics": {
+        "mean_absolute_error_rgb": [
+          60.17,
+          58.76,
+          52.84
+        ],
+        "mean_absolute_error_total": 57.27,
+        "output_size": [
+          1600,
+          1076
+        ]
+      }
+    },
+    {
+      "sample": 11,
+      "source": "BlueNeg raw DNG oriented",
+      "scanner_profile": "BlueNeg raw/pseudoGT",
+      "manual_vs_adjusted_mean_abs_diff": 52.88,
+      "manual_metrics": {
+        "mean_absolute_error_rgb": [
+          38.36,
+          36.06,
+          42.67
+        ],
+        "mean_absolute_error_total": 39.04,
+        "output_size": [
+          1600,
+          1070
+        ]
+      },
+      "adjusted_metrics": {
+        "mean_absolute_error_rgb": [
+          86.21,
+          58.84,
+          23.82
+        ],
+        "mean_absolute_error_total": 56.3,
+        "output_size": [
+          1600,
+          1070
+        ]
+      },
+      "smart_metrics": {
+        "mean_absolute_error_rgb": [
+          68.6,
+          55.73,
+          54.1
+        ],
+        "mean_absolute_error_total": 59.5,
+        "output_size": [
+          1600,
+          1070
+        ]
+      },
+      "model_metrics": {
+        "mean_absolute_error_rgb": [
+          41.47,
+          40.78,
+          31.75
+        ],
+        "mean_absolute_error_total": 38.0,
+        "output_size": [
+          1600,
+          1070
+        ]
+      }
+    },
+    {
+      "sample": 12,
+      "source": "BlueNeg raw DNG oriented",
+      "scanner_profile": "BlueNeg raw/pseudoGT",
+      "manual_vs_adjusted_mean_abs_diff": 30.58,
+      "manual_metrics": {
+        "mean_absolute_error_rgb": [
+          36.99,
+          32.56,
+          42.59
+        ],
+        "mean_absolute_error_total": 37.39,
+        "output_size": [
+          1078,
+          1600
+        ]
+      },
+      "adjusted_metrics": {
+        "mean_absolute_error_rgb": [
+          66.42,
+          53.26,
+          46.49
+        ],
+        "mean_absolute_error_total": 55.39,
+        "output_size": [
+          1078,
+          1600
+        ]
+      },
+      "smart_metrics": {
+        "mean_absolute_error_rgb": [
+          45.66,
+          40.92,
+          41.68
+        ],
+        "mean_absolute_error_total": 42.76,
+        "output_size": [
+          1078,
+          1600
+        ]
+      },
+      "model_metrics": {
+        "mean_absolute_error_rgb": [
+          51.61,
+          50.56,
+          57.23
+        ],
+        "mean_absolute_error_total": 53.14,
+        "output_size": [
+          1078,
+          1600
+        ]
+      }
+    },
+    {
+      "sample": 13,
+      "source": "BlueNeg raw DNG oriented",
+      "scanner_profile": "BlueNeg raw/pseudoGT",
+      "manual_vs_adjusted_mean_abs_diff": 32.44,
+      "manual_metrics": {
+        "mean_absolute_error_rgb": [
+          33.31,
+          34.08,
+          36.51
+        ],
+        "mean_absolute_error_total": 34.66,
+        "output_size": [
+          1600,
+          1077
+        ]
+      },
+      "adjusted_metrics": {
+        "mean_absolute_error_rgb": [
+          46.51,
+          38.27,
+          37.39
+        ],
+        "mean_absolute_error_total": 40.73,
+        "output_size": [
+          1600,
+          1077
+        ]
+      },
+      "smart_metrics": {
+        "mean_absolute_error_rgb": [
+          37.57,
+          39.2,
+          35.47
+        ],
+        "mean_absolute_error_total": 37.43,
+        "output_size": [
+          1600,
+          1077
+        ]
+      },
+      "model_metrics": {
+        "mean_absolute_error_rgb": [
+          31.44,
+          33.52,
+          33.82
+        ],
+        "mean_absolute_error_total": 32.94,
+        "output_size": [
+          1600,
+          1077
+        ]
+      }
+    }
+  ]
+}

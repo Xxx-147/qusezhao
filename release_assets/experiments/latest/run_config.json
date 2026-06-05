@@ -1,0 +1,9 @@
+{
+  "run_id": "20260604-164048",
+  "name": "mixed_true_negative_60_blueneg_raw_oriented",
+  "manifest": "C:\\Users\\19831\\Desktop\\胶片自动去色罩自动化程序-立项文档\\datasets\\mixed_true_negative_pairs\\mixed_all_manifest.csv",
+  "model": "C:\\Users\\19831\\Desktop\\胶片自动去色罩自动化程序-立项文档\\models\\film_mask_tiny_mixed_true_negative.pt",
+  "train_count": 52,
+  "test_count": 13,
+  "note": "Each sample is paired: input negative + reference target. Test samples are not used for training."
+}

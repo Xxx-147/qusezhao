@@ -130,6 +130,25 @@ python tools\create_experiment_run.py
 
 说明：当前小模型只用于验证训练和集成流程，不代表最终画质。最终模型需要更多真实负片/正片对、按胶片类型和扫描仪来源分层测试，并持续记录每次实验输出。
 
+## 可下载训练包
+
+仓库包含 `release_assets/`，用于让别人 clone 后直接使用当前训练集、测试集和模型权重：
+
+- `release_assets/dataset/manifest.csv`
+- `release_assets/dataset/train_manifest.csv`
+- `release_assets/dataset/test_manifest.csv`
+- `release_assets/models/film_mask_tiny_mixed_true_negative.pt`
+- `release_assets/experiments/latest/03_model_outputs.jpg`
+
+二进制图片和模型权重通过 Git LFS 管理。首次下载建议安装 Git LFS 后执行：
+
+```powershell
+git lfs install
+git clone https://github.com/Xxx-147/qusezhao.git
+cd qusezhao
+git lfs pull
+```
+
 ## 测试
 
 ```powershell

@@ -1,0 +1,10 @@
+{
+  "dataset_count": 65,
+  "train_count": 52,
+  "test_count": 13,
+  "model": "models/film_mask_tiny_mixed_true_negative.pt",
+  "manifest": "dataset/manifest.csv",
+  "train_manifest": "dataset/train_manifest.csv",
+  "test_manifest": "dataset/test_manifest.csv",
+  "license_note": "BlueNeg images require attribution: Copyrighted by Tien-Tsin Wong. Local user-supplied samples are included with project-owner permission."
+}
